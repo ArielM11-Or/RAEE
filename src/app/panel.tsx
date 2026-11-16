@@ -1,35 +1,35 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  ScrollView,
-  Alert,
-  Platform,
-  ActivityIndicator,
-  TextInput,
-  StatusBar as RNStatusBar,
-} from 'react-native';
-import { router } from 'expo-router';
-import * as Location from 'expo-location';
-import {
-  collection,
-  query,
-  where,
-  orderBy,
-  getDocs,
-  limit,
-} from 'firebase/firestore';
 import { useAuth } from '@/context/AuthContext';
 import {
-  useTurno,
+  CAMIONES_DISPONIBLES,
   EstadoCamion,
   TurnoType,
-  CAMIONES_DISPONIBLES,
+  useTurno,
 } from '@/context/TurnoContext';
-import { flushQueue } from '@/lib/offlineQueue';
 import { db } from '@/lib/firebase';
+import { flushQueue } from '@/lib/offlineQueue';
+import * as Location from 'expo-location';
+import { router } from 'expo-router';
+import {
+  collection,
+  getDocs,
+  limit,
+  orderBy,
+  query,
+  where,
+} from 'firebase/firestore';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import {
+  ActivityIndicator,
+  Alert,
+  Platform,
+  StatusBar as RNStatusBar,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 type TabType = 'operativo' | 'dashboard';
 
@@ -129,7 +129,7 @@ export default function PanelScreen() {
           setVelocidad(speedKmh);
 
           actualizarGPSRef.current(latitude, longitude, speedKmh);
-          flushQueue(db).catch(() => {});
+          flushQueue(db).catch(() => { });
         }
       );
     };
@@ -246,9 +246,9 @@ export default function PanelScreen() {
   const estadoConfig = ESTADOS[turno.estadoActual];
   const tiempoTotalMin = Math.round(
     turno.tiempoTransitoMin +
-      turno.tiempoRecoleccionMin +
-      turno.tiempoRalentiMin +
-      turno.tiempoCompresionMin
+    turno.tiempoRecoleccionMin +
+    turno.tiempoRalentiMin +
+    turno.tiempoCompresionMin
   );
 
   // Dashboard Aggregates
@@ -858,9 +858,9 @@ export default function PanelScreen() {
                   {turnosHistory.map((item, idx) => {
                     const tiempoTotal = Math.round(
                       (item.tiempoTransitoMin || 0) +
-                        (item.tiempoRecoleccionMin || 0) +
-                        (item.tiempoRalentiMin || 0) +
-                        (item.tiempoCompresionMin || 0)
+                      (item.tiempoRecoleccionMin || 0) +
+                      (item.tiempoRalentiMin || 0) +
+                      (item.tiempoCompresionMin || 0)
                     );
                     const isProgress = item.estadoTurno === 'en_progreso';
 
